@@ -1,8 +1,14 @@
+'use client'
 import { ActivitySquare } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import React from 'react'
 
 function Footer() {
+  const pathname = usePathname()
+  if (pathname.startsWith('/dashboard')) {
+    return null
+  }
   return (
     <>
       <footer className='w-full bg-[#141521]'>

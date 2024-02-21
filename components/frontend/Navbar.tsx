@@ -1,8 +1,14 @@
+'use client'
 import { ActivitySquare } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { usePathname } from 'next/navigation'
 
 function Navbar() {
+  const pathname = usePathname()
+  if (pathname.startsWith('/dashboard')) {
+    return null
+  }
   return (
     <header className='relative overflow-hidden border-b border-white/5 bg-[#141521]'>
       <div className='relative mx-auto w-full max-w-7xl'>
