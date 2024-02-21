@@ -48,7 +48,7 @@ function Navbar() {
                 Sign in
               </button>
               <button className='active:text-#279f0e group inline-flex items-center justify-center rounded-full bg-blue-500/85 px-4 py-2 text-sm text-white hover:bg-blue-500/95 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-50 active:bg-fuchsia-50'>
-                Post Link job - $299
+                Post jobs yearly - $10
               </button>
             </div>
           </nav>
