@@ -1,14 +1,24 @@
-import { Nav } from '@/components/backend/Nav'
+import Header from '@/components/backend/layout/Header'
+import Sidebar from '@/components/backend/layout/SideBar'
+import type { Metadata } from 'next'
 
-export default function RootLayout({
+export const metadata: Metadata = {
+  title: 'Next Shadcn Dashboard Starter',
+  description: 'Basic dashboard with Next.js and Shadcn',
+}
+
+export default function DashboardLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <div>
-      <Nav />
-      {children}
-    </div>
+    <>
+      <Header />
+      <div className='flex h-screen overflow-hidden'>
+        <Sidebar />
+        <main className='w-full pt-16'>{children}</main>
+      </div>
+    </>
   )
 }
