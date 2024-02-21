@@ -5,10 +5,10 @@ import React from 'react'
 function Footer() {
   return (
     <>
-      <footer className='w-full bg-[#141521]' aria-labelledby='footer-heading'>
-        <div className='mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-16'>
-          <div className='flex flex-col items-baseline space-y-6'>
-            <div className='mx-auto'>
+      <footer className='w-full bg-[#141521]'>
+        <div className='mx-auto max-w-7xl px-4 py-8 sm:px-6'>
+          <div className='space-y-6k flex items-center justify-between px-16'>
+            <div className='mx-autok'>
               <Link
                 href='/'
                 className='tracking-relaxed mx-auto inline-flex transform items-center gap-2 text-center text-lg text-slate-50 transition duration-500 ease-in-out'
@@ -17,8 +17,8 @@ function Footer() {
                 <span>Elite Jobs</span>
               </Link>
             </div>
-            <div className='mx-auto'>
-              <span className='mx-auto mt-2 text-sm text-gray-500'>
+            <div className='mx-autok'>
+              <span className='mx-auto text-sm text-gray-500'>
                 Copyright © 2024
                 <Link
                   href='https://mosespace.com'

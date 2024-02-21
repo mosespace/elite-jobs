@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -12,6 +12,8 @@ const jobs = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     datePosted: '22 days ago',
     isFeatured: true,
+    location: 'Uganda',
+    salaryRange: '$20K-$50K',
   },
   {
     id: 2,
@@ -22,6 +24,8 @@ const jobs = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     datePosted: '1 month ago',
     isFeatured: false,
+    location: 'United Kingdom',
+    salaryRange: '$50K-$100K',
   },
   {
     id: 3,
@@ -32,6 +36,8 @@ const jobs = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     datePosted: '1 month ago',
     isFeatured: false,
+    location: 'Rwanda',
+    salaryRange: '$100K',
   },
   {
     id: 4,
@@ -42,6 +48,8 @@ const jobs = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     datePosted: '1 month ago',
     isFeatured: true,
+    location: 'Gulu',
+    salaryRange: '$20K-$10K',
   },
   // Add more job objects as needed
 ]
@@ -91,7 +99,17 @@ function JobListing() {
                         href={`/category/${job.slug}/${job.id}`}
                         className='max-w-md '
                       >
-                        <span className='mb-2'>{job.description}</span>
+                        <span className='mb-2 line-clamp-2'>
+                          {job.description}
+                        </span>
+                        <span className='flex gap-2'>
+                          <span className='mb-2 line-clamp-2 rounded-full bg-orange-300 px-3 py-1 text-xs'>
+                            {job.salaryRange}
+                          </span>
+                          <span className='mb-2  line-clamp-2 inline-flex items-center gap-1 rounded-full bg-orange-300 px-3 py-1 text-xs'>
+                            <MapPin className='h-3 w-3' /> {job.location}
+                          </span>
+                        </span>
                       </Link>
                       <Link
                         className='ml-2 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-indigo-50 to-indigo-100 text-indigo-600 transition duration-150 hover:from-white hover:to-indigo-50 focus:outline-none focus-visible:from-white focus-visible:to-white'
