@@ -3,7 +3,7 @@ import React from 'react'
 function Hero() {
   return (
     <>
-      <section className='h-screenk flex items-center justify-center bg-[#141521]'>
+      <section className='flex items-center justify-center bg-[#141521]'>
         <div className='relative mx-auto w-full max-w-7xl items-center px-5 py-12 md:px-12 lg:px-16'>
           <div className='mx-auto max-w-3xl text-center'>
             <div>
