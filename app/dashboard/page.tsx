@@ -1,3 +1,4 @@
+'use client'
 import { Overview } from '@/components/backend/Overview'
 import { RecentSales } from '@/components/backend/RecentSales'
 import { Button } from '@/components/ui/button'
@@ -10,8 +11,10 @@ import {
 } from '@/components/ui/card'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useRouter } from 'next/navigation'
 
 export default function page() {
+  const router = useRouter()
   return (
     <ScrollArea className='h-full'>
       <div className='flex-1 space-y-4 p-4 pt-6 md:p-8'>
@@ -21,7 +24,12 @@ export default function page() {
           </h2>
           <div className='hidden items-center space-x-2 md:flex'>
             {/* <CalendarDateRangePicker /> */}
-            <Button>Download</Button>
+            <Button
+              onClick={() => router.push('/dashboard/all-jobs')}
+              className='bg-[#ffa500] font-bold text-[#888888] hover:border hover:border-[#ffa500] hover:bg-transparent dark:font-normal dark:text-white'
+            >
+              Post a Job
+            </Button>
           </div>
         </div>
         <Tabs defaultValue='overview' className='space-y-4'>
