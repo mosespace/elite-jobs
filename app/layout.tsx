@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../styles/globals.css'
+import { Toaster } from '@/components/ui/toaster'
 import Navbar from '@/components/frontend/Navbar'
 import Footer from '@/components/frontend/Footer'
 import ThemeProvider from '@/components/backend/layout/ThemeToggle/ThemeProvider'
@@ -29,6 +30,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

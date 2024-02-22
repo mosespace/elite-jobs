@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils'
 import { userAuthSchema } from '@/lib/validations/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
-import { useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -27,15 +26,15 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
-  const searchParams = useSearchParams()
 
-  async function onSubmit(data: FormData) {
+  async function onSubmit(data: any) {
     setIsLoading(true)
+    console.log(data)
 
     const signInResult = await signIn('email', {
       email: data.email.toLowerCase(),
       redirect: false,
-      callbackUrl: searchParams?.get('from') || '/dashboard',
+      callbackUrl: '/dashboard',
     })
 
     setIsLoading(false)
@@ -101,16 +100,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         className={cn(buttonVariants({ variant: 'outline' }))}
         onClick={() => {
           setIsGitHubLoading(true)
-          signIn('github')
+          signIn('twitter')
         }}
         disabled={isLoading || isGitHubLoading}
       >
         {isGitHubLoading ? (
           <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
         ) : (
-          <Icons.linkedIn className='mr-2 h-4 w-4' />
+          <Icons.twitter className='mr-2 h-4 w-4' />
         )}
-        LinkedIn
+        Twitter
       </button>
     </div>
   )
