@@ -3,6 +3,7 @@ import { UserAuthForm } from '@/components/frontend/user-auth-form'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 export default function RegisterPage() {
   return (
@@ -28,7 +29,9 @@ export default function RegisterPage() {
               Enter your email below to create your account
             </p>
           </div>
-          <UserAuthForm />
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserAuthForm />
+          </Suspense>
           <p className='px-8 text-center text-sm text-muted-foreground'>
             By clicking continue, you agree to our{' '}
             <Link
