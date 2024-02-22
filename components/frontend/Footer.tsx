@@ -9,6 +9,12 @@ function Footer() {
   if (pathname.startsWith('/dashboard')) {
     return null
   }
+  if (pathname.startsWith('/register')) {
+    return null
+  }
+  if (pathname.startsWith('/login')) {
+    return null
+  }
   return (
     <>
       <footer className='w-full bg-[#141521]'>

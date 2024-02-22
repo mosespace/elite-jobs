@@ -9,6 +9,12 @@ function Navbar() {
   if (pathname.startsWith('/dashboard')) {
     return null
   }
+  if (pathname.startsWith('/register')) {
+    return null
+  }
+  if (pathname.startsWith('/login')) {
+    return null
+  }
   return (
     <header className='relative overflow-hidden border-b border-white/5 bg-[#141521]'>
       <div className='relative mx-auto w-full max-w-7xl'>
