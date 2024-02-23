@@ -26,7 +26,7 @@ export default function page() {
             {/* <CalendarDateRangePicker /> */}
             <Button
               onClick={() => router.push('/dashboard/all-jobs')}
-              className='bg-[#ffa500] font-bold text-[#888888] hover:border hover:border-[#ffa500] hover:bg-transparent dark:font-normal dark:text-white'
+              className='bg-[#ffa500] font-bold text-white hover:text-zinc-950 hover:border hover:border-[#ffa500] hover:bg-transparent dark:font-normal dark:text-white'
             >
               Post a Job
             </Button>
