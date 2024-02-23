@@ -1,5 +1,6 @@
 import {
   Body,
+  Button,
   Container,
   Head,
   Heading,
@@ -17,9 +18,9 @@ interface MagicLinkEmailProps {
   url?: string
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : ''
+// const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+//   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+//   : ''
 
 export const MagicLinkEmail = ({ url }: MagicLinkEmailProps) => (
   <Html>
@@ -28,17 +29,25 @@ export const MagicLinkEmail = ({ url }: MagicLinkEmailProps) => (
     <Body style={main}>
       <Container style={container}>
         <Img
-          src={`${baseUrl}/elitejobs.svg`}
-          width={48}
-          height={48}
+          src={`https://utfs.io/f/e81d92c5-7405-4578-a1e7-95d8c122e2d5-20fr50.svg`}
+          width={50}
+          height={50}
           alt='Elite Jobs'
+          style={{
+            objectFit: 'cover',
+            objectPosition: '0 0',
+            margin: '0',
+            width: '20%',
+            height: '10%',
+          }}
         />
-        <Heading style={heading}>🪄 Your magic link</Heading>
+
+        <Heading style={heading}>Your magic link 🪄 </Heading>
         <Section style={body}>
           <Text style={paragraph}>
-            <Link style={link} href={url}>
+            <Button style={button} href={url}>
               👉 Click here to sign in 👈
-            </Link>
+            </Button>
           </Text>
           <Text style={paragraph}>
             If you didn't request this, please ignore this email.
@@ -46,17 +55,21 @@ export const MagicLinkEmail = ({ url }: MagicLinkEmailProps) => (
         </Section>
         <Text style={paragraph}>
           Kind Regards,
-          <br />- Elite Jobs Team Team
+          <br />
+          Elite Jobs Team Team
         </Text>
         <Hr style={hr} />
         <Img
-          src={`${baseUrl}/elitejobs.svg`}
+          src={`https://utfs.io/f/e81d92c5-7405-4578-a1e7-95d8c122e2d5-20fr50.svg`}
           width={32}
           height={32}
           style={{
             WebkitFilter: 'grayscale(100%)',
             filter: 'grayscale(100%)',
             margin: '20px 0',
+            width: '20%',
+            height: '10%',
+            objectPosition: '0 0',
           }}
         />
         <Text style={footer}>Elite Jobs Technologies Inc.</Text>
@@ -68,6 +81,18 @@ export const MagicLinkEmail = ({ url }: MagicLinkEmailProps) => (
 
 export default MagicLinkEmail
 
+const button = {
+  backgroundColor: '#ffa500',
+  borderRadius: '3px',
+  fontWeight: '600',
+  color: '#fff',
+  fontSize: '15px',
+  textDecoration: 'none',
+  textAlign: 'center' as const,
+  display: 'block',
+  padding: '11px 23px',
+}
+
 const main = {
   backgroundColor: '#ffffff',
   fontFamily:
@@ -77,7 +102,7 @@ const main = {
 const container = {
   margin: '0 auto',
   padding: '20px 25px 48px',
-  backgroundImage: 'url("/assets/raycast-bg.png")',
+  backgroundImage: `url('/assets/elitejobs-bg.jpg')`,
   backgroundPosition: 'bottom',
   backgroundRepeat: 'no-repeat, no-repeat',
 }
@@ -95,10 +120,6 @@ const body = {
 const paragraph = {
   fontSize: '16px',
   lineHeight: '26px',
-}
-
-const link = {
-  color: '#FF6363',
 }
 
 const hr = {
