@@ -31,7 +31,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true)
     console.log(data)
 
-    const signInResult = await signIn('email', {
+    const signInResult = await signIn('resend', {
       email: data.email.toLowerCase(),
       redirect: false,
       callbackUrl: '/dashboard',
