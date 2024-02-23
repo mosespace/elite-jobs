@@ -5,13 +5,13 @@ export async function sendVerificationRequest(params: any) {
   const { identifier, url, provider } = params
   const { host } = new URL(url)
 
-  console.log(identifier, host, provider)
+  // console.log(identifier, host, provider)
 
   try {
     const data = await resend.emails.send({
       from: 'info@mosespace.com',
       to: [identifier],
-      subject: `Confirm Email Address`,
+      subject: `Confirm Your Email Address`,
       // text: text({ url, host }) as string, // Add type annotation
       react: MagicLinkEmail({ url } as any),
     })
