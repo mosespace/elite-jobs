@@ -15,14 +15,14 @@ import * as React from 'react'
 
 interface MagicLinkEmailProps {
   url?: string
-  host?: string
 }
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : ''
+const baseUrl = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+// const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+//   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+//   : ''
 
-export const MagicLinkEmail = ({ url, host }: MagicLinkEmailProps) => (
+export const MagicLinkEmail = ({ url }: MagicLinkEmailProps) => (
   <Html>
     <Head />
     <Preview>Log in with this magic link.</Preview>
@@ -46,7 +46,7 @@ export const MagicLinkEmail = ({ url, host }: MagicLinkEmailProps) => (
           </Text>
         </Section>
         <Text style={paragraph}>
-          Best,
+          Kind Regards,
           <br />- Elite Jobs Team Team
         </Text>
         <Hr style={hr} />
@@ -60,7 +60,7 @@ export const MagicLinkEmail = ({ url, host }: MagicLinkEmailProps) => (
             margin: '20px 0',
           }}
         />
-        <Text style={footer}>{host} Technologies Inc.</Text>
+        <Text style={footer}>Elite Jobs Technologies Inc.</Text>
         <Text style={footer}>2024 Uganda #56, Kampala, Kireka 19703</Text>
       </Container>
     </Body>
