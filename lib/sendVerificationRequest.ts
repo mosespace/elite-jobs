@@ -20,6 +20,6 @@ export async function sendVerificationRequest(params: any) {
     return { success: true, data }
   } catch (error) {
     console.log(error)
-    // throw new Error('Failed to send verification Email')
+    throw new Error('Failed to send verification Email')
   }
 }
