@@ -2,19 +2,25 @@ import { resend } from './resend'
 import MagicLinkEmail from '@/emails/MagicLinkEmail'
 
 export async function sendVerificationRequest(params: any) {
-  const { identifier, url, provider } = params
+  const { identifier: email, url, token } = params
   const { host } = new URL(url)
 
   // console.log(identifier, host, provider)
 
+  const baseUrl = process.env.NEXTAUTH_URL
+
+  const link = `${baseUrl}/login?callbackUrl=${encodeURIComponent(url)}&token=${encodeURIComponent(
+    token,
+  )}&email=${encodeURIComponent(email)}`
+
   try {
     const data = await resend.emails.send({
       from: 'info@mosespace.com',
-      to: [identifier],
+      to: [email],
       subject: `Confirm Your Email Address`,
       // text: text({ url, host }) as string, // Add type annotation
-      react: MagicLinkEmail({ url } as any),
-    })
+      react: MagicLinkEmail({ url: link } as any),
+    } as any)
 
     console.log(data)
     return { success: true, data }

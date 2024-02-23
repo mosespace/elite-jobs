@@ -11,6 +11,7 @@ import { signIn } from 'next-auth/react'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { useSearchParams } from "next/navigation"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -26,15 +27,17 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
+  const searchParams = useSearchParams()
+
 
   async function onSubmit(data: any) {
     setIsLoading(true)
-    console.log(data)
+    // console.log(data)
 
     const signInResult = await signIn('resend', {
       email: data.email.toLowerCase(),
       redirect: false,
-      callbackUrl: '/dashboard',
+      callbackUrl: searchParams?.get("from") || "/dashboard",
     })
 
     setIsLoading(false)

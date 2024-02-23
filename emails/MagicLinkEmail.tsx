@@ -17,10 +17,6 @@ interface MagicLinkEmailProps {
   url?: string
 }
 
-// const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-//   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-//   : ''
-
 export const MagicLinkEmail = ({ url }: MagicLinkEmailProps) => (
   <Html>
     <Head />

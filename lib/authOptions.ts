@@ -5,15 +5,9 @@ import TwitterProvider from 'next-auth/providers/twitter'
 import { sendVerificationRequest } from './sendVerificationRequest'
 import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient()
+
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(new PrismaClient()) as any,
-  secret: process.env.NEXT_AUTH_SECRET as any,
-  session: {
-    strategy: 'jwt',
-  },
-  pages: {
-    signIn: '/login',
-  },
   providers: [
     TwitterProvider({
       clientId: String(process.env.TWITTER_CLIENT_ID),
@@ -25,16 +19,32 @@ export const authOptions: NextAuthOptions = {
       sendVerificationRequest, // Updated here
     } as any,
   ],
-  callbacks: {
-    async session({ token, session }: any) {
-      if (token) {
-        session.user.id = token.id
-        session.user.name = token.name
-        session.user.email = token.email
-        session.user.image = token.picture
-      }
 
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log(email)
+      return true
+    },
+    async session({ token, session }) {
+      if (token && session) {
+        session.user = {
+          token: token.accessToken,
+          id: token.id,
+          name: token.name,
+          email: token.email,
+          image: token.picture,
+        } as {
+          id: string // Assuming id is of type string, adjust it as needed
+          name?: string | null | undefined
+          email?: string | null | undefined
+          image?: string | null | undefined
+          token?: string | null | undefined
+        }
+      }
+      console.log(session)
       return session
+      // console.log(session)
+      // return session
     },
     async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
@@ -58,4 +68,16 @@ export const authOptions: NextAuthOptions = {
       }
     },
   },
+
+  pages: {
+    signIn: '/login',
+  },
+
+  adapter: PrismaAdapter(prisma) as any,
+
+  session: {
+    strategy: 'jwt',
+  },
+
+  secret: process.env.NEXT_AUTH_SECRET as any,
 }
