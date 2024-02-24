@@ -11,7 +11,7 @@ import { signIn } from 'next-auth/react'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { useSearchParams } from "next/navigation"
+import { useSearchParams } from 'next/navigation'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -29,7 +29,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
 
-
   async function onSubmit(data: any) {
     setIsLoading(true)
     // console.log(data)
@@ -37,7 +36,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     const signInResult = await signIn('resend', {
       email: data.email.toLowerCase(),
       redirect: false,
-      callbackUrl: searchParams?.get("from") || "/dashboard",
+      callbackUrl: searchParams?.get('from') || '/dashboard',
     })
 
     setIsLoading(false)
@@ -103,7 +102,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         className={cn(buttonVariants({ variant: 'outline' }))}
         onClick={() => {
           setIsGitHubLoading(true)
-          signIn('twitter')
+          signIn('google')
         }}
         disabled={isLoading || isGitHubLoading}
       >
@@ -112,7 +111,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         ) : (
           <Icons.twitter className='mr-2 h-4 w-4' />
         )}
-        Twitter
+        Google
       </button>
     </div>
   )

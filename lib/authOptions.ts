@@ -1,31 +1,50 @@
-import { db } from '@/lib/db'
-import { PrismaAdapter } from '@auth/prisma-adapter'
 import { NextAuthOptions } from 'next-auth'
-import TwitterProvider from 'next-auth/providers/twitter'
-import { sendVerificationRequest } from './sendVerificationRequest'
+import GoogleProvider from "next-auth/providers/google";
 import { PrismaClient } from '@prisma/client'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import { resend } from './resend'
+import MagicLinkEmail from '@/emails/MagicLinkEmail'
+import { db } from '@/lib/db'
 
 const prisma = new PrismaClient()
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    TwitterProvider({
-      clientId: String(process.env.TWITTER_CLIENT_ID),
-      clientSecret: String(process.env.TWITTER_CLIENT_SECRET),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as any,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as any,
     }),
     {
       id: 'resend',
       type: 'email',
-      sendVerificationRequest, // Updated here
+      sendVerificationRequest: async (params: any) => {
+        const { identifier: email, url, token } = params
+        console.log(`Sending verification request email to: ${email}`)
+        try {
+          const data = await resend.emails.send({
+            from: 'info@mosespace.com',
+            to: [email],
+            subject: `Confirm Your Email Address`,
+            react: MagicLinkEmail({ url } as any),
+          } as any)
+
+          console.log(`Verification email sent successfully to: ${email}`)
+          return { success: true, data }
+        } catch (error) {
+          console.error(`Failed to send verification email to ${email}:`, error)
+          throw new Error('Failed to send verification Email')
+        }
+      },
     } as any,
   ],
 
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      console.log(email)
+    async signIn({ email }) {
+      console.log(`User signed in with email: ${email}`)
       return true
     },
     async session({ token, session }) {
+      console.log('Session callback triggered:', session)
       if (token && session) {
         session.user = {
           token: token.accessToken,
@@ -41,15 +60,15 @@ export const authOptions: NextAuthOptions = {
           token?: string | null | undefined
         }
       }
-      console.log(session)
       return session
-      // console.log(session)
-      // return session
     },
     async jwt({ token, user }) {
+      const email = token?.email || (user?.email ?? null)
+      console.log('JWT callback triggered. Email:', email)
+
       const dbUser = await db.user.findFirst({
         where: {
-          email: token.email,
+          email: email,
         },
       })
 
@@ -81,3 +100,5 @@ export const authOptions: NextAuthOptions = {
 
   secret: process.env.NEXT_AUTH_SECRET as any,
 }
+
+export default authOptions

@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth/next'
 import { NextResponse } from 'next/server'
 
 export async function PATCH(req: any, { params: { id } }: any) {
+  console.log(id)
   try {
     const { name } = await req.json()
     // Ensure user is authentication and has access to this user.

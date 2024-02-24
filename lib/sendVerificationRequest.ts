@@ -3,15 +3,8 @@ import MagicLinkEmail from '@/emails/MagicLinkEmail'
 
 export async function sendVerificationRequest(params: any) {
   const { identifier: email, url, token } = params
-  const { host } = new URL(url)
 
-  // console.log(identifier, host, provider)
-
-  const baseUrl = process.env.NEXTAUTH_URL
-
-  const link = `${baseUrl}/login?callbackUrl=${encodeURIComponent(url)}&token=${encodeURIComponent(
-    token,
-  )}&email=${encodeURIComponent(email)}`
+  // console.log(email, url, token)
 
   try {
     const data = await resend.emails.send({
@@ -19,7 +12,7 @@ export async function sendVerificationRequest(params: any) {
       to: [email],
       subject: `Confirm Your Email Address`,
       // text: text({ url, host }) as string, // Add type annotation
-      react: MagicLinkEmail({ url: link } as any),
+      react: MagicLinkEmail({ url } as any),
     } as any)
 
     console.log(data)
