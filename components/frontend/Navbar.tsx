@@ -1,5 +1,5 @@
 'use client'
-import { ActivitySquare } from 'lucide-react'
+import { ActivitySquare, Menu } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { usePathname } from 'next/navigation'
@@ -17,41 +17,18 @@ function Navbar() {
   }
   return (
     <header className='relative overflow-hidden border-b border-white/5 bg-[#141521]'>
-      <div className='relative mx-auto w-full max-w-7xl'>
-        <div
-          className='relative mx-auto flex w-full flex-col p-5 md:flex-row md:items-center md:justify-between md:px-6 lg:px-16'
-          x-data='{ open: false }'
-        >
-          <div className='flex flex-row items-center justify-between text-sm text-white lg:justify-start'>
+      <div className='relative w-full max-w-7xl md:mx-auto'>
+        <div className='relative flex w-full flex-col p-5 md:mx-auto md:flex-row md:items-center md:justify-between md:px-6 lg:px-16'>
+          <div className='justify-between flex flex-row items-center text-sm text-white lg:justify-start'>
             <Link
               href='/'
-              className='tracking-relaxed mx-auto inline-flex transform items-center gap-2 text-center text-lg text-slate-50 transition duration-500 ease-in-out'
+              className='tracking-relaxed md:mx-auto inline-flex transform items-center gap-2 text-center text-lg text-slate-50 transition duration-500 ease-in-out'
             >
               <ActivitySquare className='h-5 w-5' />
               <span className='text-sm font-bold'>Elite Jobs</span>
             </Link>
             <button className='inline-flex items-center justify-center p-2 text-white hover:text-black focus:text-black focus:outline-none md:hidden'>
-              <svg
-                className='h-6 w-6'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  className='inline-flex'
-                  d='M4 6h16M4 12h16M4 18h16'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                ></path>
-                <path
-                  className='hidden'
-                  d='M6 18L18 6M6 6l12 12'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                ></path>
-              </svg>
+              <Menu className='h-6 w-6' />
             </button>
           </div>
           <nav className='hidden flex-grow flex-col items-center md:flex md:flex-row md:justify-end md:pb-0'>

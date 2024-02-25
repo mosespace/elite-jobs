@@ -18,19 +18,19 @@ function Footer() {
   return (
     <>
       <footer className='w-full bg-[#141521]'>
-        <div className='mx-auto max-w-7xl px-4 py-8 sm:px-6'>
-          <div className='space-y-6k flex items-center justify-between px-16'>
-            <div className='mx-autok'>
+        <div className='mx-auto w-full px-4 py-8 sm:px-6 lg:max-w-7xl'>
+          <div className='lg:space-y-6k flex flex-col justify-between px-2 md:items-center lg:px-16'>
+            <div className=''>
               <Link
                 href='/'
-                className='tracking-relaxed mx-auto inline-flex transform items-center gap-2 text-center text-lg text-slate-50 transition duration-500 ease-in-out'
+                className='tracking-relaxed inline-flex transform items-center gap-2 text-center text-lg text-slate-50 transition duration-500 ease-in-out md:mx-auto'
               >
                 <ActivitySquare className='h-8 w-8' />
                 <span>Elite Jobs</span>
               </Link>
             </div>
-            <div className='mx-autok'>
-              <span className='mx-auto text-sm text-gray-500'>
+            <div className=''>
+              <span className='mx-auto text-center text-sm text-gray-500'>
                 Copyright © 2024
                 <Link
                   href='https://mosespace.com'

@@ -59,7 +59,7 @@ function JobListing() {
     <div className='relative mx-auto w-full max-w-7xl items-center px-5 py-12 md:px-12 lg:px-16'>
       <h2 className='text-3xl font-bold'>Latest jobs</h2>
 
-      <div className='mt-8 flex gap-8'>
+      <div className='mt-8 flex flex-col gap-8'>
         {/* All Jobs*/}
         <div className='flex flex-1 flex-col gap-4'>
           {jobs.map(job => (
@@ -129,7 +129,7 @@ function JobListing() {
         </div>
 
         {/* Job Filters*/}
-        <div className='sticky top-12 z-10 max-h-screen max-w-lg overflow-y-auto rounded-lg bg-white px-12 py-8 shadow'>
+        <div className='sticky top-12 z-10 max-h-screen overflow-y-auto rounded-lg bg-white px-8 md:px-12 py-8 shadow md:w-full lg:max-w-lg'>
           <div className='mb-3 flex justify-between'>
             <h6 className='text-base font-medium text-gray-900'>Job Type</h6>
             <button className='text-sm text-blue-500 hover:text-gray-800'>

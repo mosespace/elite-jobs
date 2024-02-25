@@ -1,5 +1,5 @@
 import { NextAuthOptions } from 'next-auth'
-import GoogleProvider from "next-auth/providers/google";
+import GoogleProvider from 'next-auth/providers/google'
 import { PrismaClient } from '@prisma/client'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { resend } from './resend'
