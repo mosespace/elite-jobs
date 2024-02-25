@@ -64,7 +64,7 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       const email = token?.email || (user?.email ?? null)
-      console.log('JWT callback triggered. Email:', email)
+      console.log('JWT callback triggered. For Email:', email)
 
       const dbUser = await db.user.findFirst({
         where: {
