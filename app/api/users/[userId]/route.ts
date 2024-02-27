@@ -1,44 +1,54 @@
-import { authOptions } from '@/lib/authOptions'
-import { db } from '@/lib/db'
 import { getServerSession } from 'next-auth/next'
+import { z } from 'zod'
+
+import { db } from '@/lib/db'
+import { userNameSchema } from '@/lib/validations/user'
+import authOptions from '@/lib/authOptions'
 import { NextResponse } from 'next/server'
 
-export async function PATCH(req: any, { params: { id } }: any) {
-  console.log(id)
+export async function PATCH(req: any, { params: { userId } }: any) {
   try {
-    const { name } = await req.json()
     // Ensure user is authentication and has access to this user.
     const session: any = await getServerSession(authOptions)
-    if (!session?.user || id !== session?.user.id) {
+    if (!session?.user || userId !== session?.user.id) {
       return new Response(null, { status: 403 })
     }
 
     // Get the request body and validate it.
+    const body = await req.json()
+    const payload = userNameSchema.parse(body)
 
     // Update the user.
-    const updatedUser = await db.user.update({
+    await db.user.update({
       where: {
-        id: session.user.id,
+        id: userId,
       },
       data: {
-        name,
+        name: payload.name,
       },
     })
 
-    console.log('User updated successfully', updatedUser)
-    return NextResponse.json(updatedUser, {
-      status: 201,
-    })
+    return new Response(null, { status: 200 })
   } catch (error) {
-    console.log(error)
-    return NextResponse.json(
-      {
-        error,
-        message: 'Failed to update a user',
+    if (error instanceof z.ZodError) {
+      return new Response(JSON.stringify(error.issues), { status: 422 })
+    }
+
+    return new Response(null, { status: 500 })
+  }
+}
+
+export async function GET(req: any, { params: { userId } }: any) {
+  // console.log(userId)
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        id: userId,
       },
-      {
-        status: 500,
-      },
-    )
+    })
+    return NextResponse.json(user)
+  } catch (error) {
+    console.error('Error fetching user:', error)
+    return NextResponse.json({ error: 'Failed to fetch user' }, { status: 500 })
   }
 }
