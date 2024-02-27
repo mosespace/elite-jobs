@@ -141,10 +141,10 @@ export const navItems: NavItem[] = [
   //   icon: 'kanban',
   //   label: 'kanban',
   // },
-  {
-    title: 'Log Out',
-    href: '/',
-    icon: 'login',
-    label: 'logout',
-  },
+  // {
+  //   title: 'Log Out',
+  //   href: '/',
+  //   icon: 'login',
+  //   label: 'logout',
+  // },
 ]

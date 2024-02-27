@@ -1,20 +1,24 @@
+import { notFound } from 'next/navigation'
 import Header from '@/components/backend/layout/Header'
 import Sidebar from '@/components/backend/layout/SideBar'
-import type { Metadata } from 'next'
+import { getCurrentUser } from '@/lib/AuthProvider'
 
-export const metadata: Metadata = {
-  title: 'Next Shadcn Dashboard Starter',
-  description: 'Basic dashboard with Next.js and Shadcn',
+interface DashboardLayoutProps {
+  children?: React.ReactNode
 }
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: DashboardLayoutProps) {
+  const user = await getCurrentUser()
+  // console.log(user)
+
+  if (!user) {
+    return notFound()
+  }
   return (
     <>
-      <Header />
+      <Header user={user}/>
       <div className='flex h-screen overflow-hidden'>
         <Sidebar />
         <main className='w-full pt-16'>{children}</main>

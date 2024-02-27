@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
         console.log(`Sending verification request email to: ${email}`)
         try {
           const data = await resend.emails.send({
-            from: 'info@mosespace.com',
+            from: 'Elite Jobs <info@mosespace.com>',
             to: [email],
             subject: `Confirm Your Email Address`,
             react: MagicLinkEmail({ url } as any),
@@ -40,11 +40,17 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async signIn({ email }) {
-      console.log(`User signed in with email: ${email}`)
+      if (email && email.verificationRequest === true) {
+        console.log('Email has been verified')
+      } else {
+        console.log(
+          'User signed in but email is not available or not verified yet',
+        )
+      }
       return true
     },
     async session({ token, session }) {
-      console.log('Session callback triggered:', session)
+      // console.log('Session callback triggered:', session)
       if (token && session) {
         session.user = {
           token: token.accessToken,
@@ -64,7 +70,10 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       const email = token?.email || (user?.email ?? null)
-      console.log('JWT callback triggered. For Email:', email)
+      // console.log(
+      //   'JWT callback triggered. For Email:',
+      //   email ? email.toString() : 'No email available',
+      // )
 
       const dbUser = await db.user.findFirst({
         where: {
