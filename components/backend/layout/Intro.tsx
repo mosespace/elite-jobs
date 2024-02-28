@@ -1,7 +1,9 @@
 'use client'
+import { JobCreateButton } from '../job-creation-btn'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Overview } from '@/components/backend/Overview'
 import { RecentSales } from '@/components/backend/RecentSales'
-import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Card,
   CardContent,
@@ -9,9 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { redirect } from 'next/navigation'
 
 export default async function Intro({ user }: any) {
   return (
@@ -22,12 +21,7 @@ export default async function Intro({ user }: any) {
             Hi, Welcome back {user && user.name ? user.name : ''}👋
           </h2>
           <div className='hidden items-center space-x-2 md:flex'>
-            <Button
-              onClick={() => redirect('/dashboard/all-jobs')}
-              className='bg-[#ffa500] font-bold text-white hover:border hover:border-[#ffa500] hover:bg-transparent hover:text-zinc-950 dark:font-normal dark:text-white'
-            >
-              Post a Job
-            </Button>
+            <JobCreateButton />
           </div>
         </div>
         <Tabs defaultValue='overview' className='space-y-4'>

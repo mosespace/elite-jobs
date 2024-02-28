@@ -15,6 +15,9 @@ function Footer() {
   if (pathname.startsWith('/login')) {
     return null
   }
+  if (pathname.startsWith('/editor')) {
+    return null
+  }
   return (
     <>
       <footer className='w-full bg-[#141521]'>

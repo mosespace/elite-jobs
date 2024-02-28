@@ -15,6 +15,9 @@ function Navbar() {
   if (pathname.startsWith('/login')) {
     return null
   }
+  if (pathname.startsWith('/editor')) {
+    return null
+  }
   return (
     <header className='relative overflow-hidden border-b border-white/5 bg-[#141521]'>
       <div className='relative w-full max-w-7xl md:mx-auto'>

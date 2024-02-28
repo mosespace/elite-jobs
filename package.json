@@ -1,11 +1,16 @@
 {
-  "name": "typescript-template",
+  "name": "elite-jobs",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "mosespace",
+    "url": "https://www.mosespace.com"
+  },
   "scripts": {
     "dev": "next dev",
-    "email": "email dev",
     "build": "next build",
+    "turbo": "next dev --turbo",
+    "email": "email dev",
     "start": "next start",
     "lint": "next lint",
     "preview": "next build && next start",
@@ -13,6 +18,15 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.4.0",
+    "@editorjs/code": "^2.9.0",
+    "@editorjs/editorjs": "^2.29.0",
+    "@editorjs/embed": "^2.7.0",
+    "@editorjs/header": "^2.8.1",
+    "@editorjs/inline-code": "^1.5.0",
+    "@editorjs/link": "^2.6.2",
+    "@editorjs/list": "^1.9.0",
+    "@editorjs/paragraph": "^2.11.3",
+    "@editorjs/table": "^2.3.0",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.10.2",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -39,10 +53,12 @@
     "react-dom": "^18",
     "react-email": "^2.1.0",
     "react-hook-form": "^7.50.1",
+    "react-textarea-autosize": "^8.5.3",
     "recharts": "^2.12.1",
     "resend": "^3.2.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "usehooks-ts": "^2.15.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
