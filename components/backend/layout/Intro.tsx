@@ -11,8 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { db } from '@/lib/db'
+import { EmptyPlaceholder } from '@/components/skeleton/empty-placeholder'
+import getData from '@/lib/getData'
+import { PostItem } from './post-item'
 
 export default async function Intro({ user }: any) {
+  const posts = await getData(`/posts`)
   return (
     <ScrollArea className='h-full'>
       <div className='flex-1 space-y-4 p-4 pt-6 md:p-8'>
@@ -24,6 +29,7 @@ export default async function Intro({ user }: any) {
             <JobCreateButton />
           </div>
         </div>
+
         <Tabs defaultValue='overview' className='space-y-4'>
           <TabsList>
             <TabsTrigger value='overview'>Overview</TabsTrigger>
@@ -31,6 +37,7 @@ export default async function Intro({ user }: any) {
               Analytics
             </TabsTrigger>
           </TabsList>
+
           <TabsContent value='overview' className='space-y-4'>
             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
               <Card>
@@ -135,6 +142,27 @@ export default async function Intro({ user }: any) {
                 </CardContent>
               </Card>
             </div>
+            <div>
+              {posts?.length ? (
+                <div className='divide-y divide-border rounded-md border'>
+                  {posts.map(post => (
+                    <PostItem key={post.id} post={post} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyPlaceholder>
+                  <EmptyPlaceholder.Icon name='post' />
+                  <EmptyPlaceholder.Title>
+                    No jobs created
+                  </EmptyPlaceholder.Title>
+                  <EmptyPlaceholder.Description>
+                    You don&apos;t have any jobs yet. Start creating jobs.
+                  </EmptyPlaceholder.Description>
+                  <JobCreateButton variant='outline' />
+                </EmptyPlaceholder>
+              )}
+            </div>
+
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
               <Card className='col-span-4'>
                 <CardHeader>
