@@ -1,4 +1,3 @@
-'use client'
 import { JobCreateButton } from '../job-creation-btn'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Overview } from '@/components/backend/Overview'
@@ -11,13 +10,27 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { db } from '@/lib/db'
 import { EmptyPlaceholder } from '@/components/skeleton/empty-placeholder'
 import getData from '@/lib/getData'
 import { PostItem } from './post-item'
+import { db } from '@/lib/db'
 
 export default async function Intro({ user }: any) {
-  const posts = await getData(`/posts`)
+  const posts = await db.post.findMany({
+    where: {
+      authorId: user.id,
+    },
+    select: {
+      id: true,
+      title: true,
+      published: true,
+      createdAt: true,
+    },
+    orderBy: {
+      updatedAt: 'desc',
+    },
+  })
+  // console.log(posts)
   return (
     <ScrollArea className='h-full'>
       <div className='flex-1 space-y-4 p-4 pt-6 md:p-8'>
@@ -43,7 +56,7 @@ export default async function Intro({ user }: any) {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Total Revenue
+                    Total Jobs Posted
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -59,7 +72,7 @@ export default async function Intro({ user }: any) {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>$45,231.89</div>
+                  <div className='text-2xl font-bold'>45,231.89</div>
                   <p className='text-xs text-muted-foreground'>
                     +20.1% from last month
                   </p>
@@ -68,7 +81,7 @@ export default async function Intro({ user }: any) {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Subscriptions
+                    Website Visitors
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -94,7 +107,9 @@ export default async function Intro({ user }: any) {
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>Sales</CardTitle>
+                  <CardTitle className='text-sm font-medium'>
+                    Total Revenue
+                  </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 24 24'
@@ -142,6 +157,7 @@ export default async function Intro({ user }: any) {
                 </CardContent>
               </Card>
             </div>
+
             <div>
               {posts?.length ? (
                 <div className='divide-y divide-border rounded-md border'>

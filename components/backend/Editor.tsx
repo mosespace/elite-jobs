@@ -3,9 +3,11 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import EditorJS from '@editorjs/editorjs'
-import { zodResolver } from '@hookform/resolvers/zod'
+import '@/styles/editor.css'
 import { Post } from '@prisma/client'
+import EditorJS from '@editorjs/editorjs'
+
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import TextareaAutosize from 'react-textarea-autosize'
 import * as z from 'zod'
@@ -50,7 +52,7 @@ export function Editor({ post }: EditorProps) {
         onReady() {
           ref.current = editor
         },
-        placeholder: 'Type here to write your post...',
+        placeholder: 'Type here to write your job...',
         inlineToolbar: true,
         data: body.content,
         tools: {
@@ -84,36 +86,55 @@ export function Editor({ post }: EditorProps) {
   }, [isMounted, initializeEditor])
 
   async function onSubmit(data: FormData) {
-    setIsSaving(true)
+    try {
+      setIsSaving(true)
 
-    const blocks = await ref.current?.save()
+      // Save the editor blocks
+      const blocks = await ref.current?.save()
 
-    const response = await fetch(`/api/posts/${post.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+      // Prepare the data to be sent in the PATCH request
+      const postData = {
         title: data.title,
-        content: blocks,
-      }),
-    })
+        content:
+          "useHooks(🔥).ts is a React hooks library, written in Typescript and easy to use. It provides a set of hooks that enables you to build your React applications faster. The hooks are built upon the principles of DRY (Don't Repeat Yourself). There are hooks for most common use cases you might need.The library is designed to be as minimal as possible. It is fully tree-shakable (using the ESM version), meaning that you only import the hooks you need, and the rest will be removed from your bundle making the cost of using this library negligible. Most hooks are extensively tested and are being used in production environments.",
+      }
 
-    setIsSaving(false)
+      // Logging the data being sent (optional)
+      console.log('Data to be sent:', postData)
 
-    if (!response?.ok) {
-      return toast({
-        title: 'Something went wrong.',
-        description: 'Your post was not saved. Please try again.',
+      // Send the PATCH request to update the post
+      const response = await fetch(`/api/posts/${post.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
+
+      setIsSaving(false)
+
+      // Check if the request was successful
+      if (!response.ok) {
+        // If not successful, throw an error
+        throw new Error('Failed to update post')
+      }
+
+      // If successful, refresh the page
+      router.refresh()
+
+      // Show a success message
+      toast({ description: 'Your post has been updated.' })
+    } catch (error) {
+      // If an error occurs, handle it
+      console.error('Error updating post:', error)
+
+      // Show an error message
+      toast({
+        title: 'Error',
+        description: 'Failed to update post. Please try again.',
         variant: 'destructive',
       })
     }
-
-    router.refresh()
-
-    return toast({
-      description: 'Your post has been saved.',
-    })
   }
 
   if (!isMounted) {
@@ -145,7 +166,7 @@ export function Editor({ post }: EditorProps) {
             <span>Save</span>
           </button>
         </div>
-        <div className='prose prose-stone dark:prose-invert mx-auto w-[800px]'>
+        <div className='mx-auto w-[800px]'>
           <TextareaAutosize
             autoFocus
             id='title'
@@ -154,7 +175,7 @@ export function Editor({ post }: EditorProps) {
             className='w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none'
             {...register('title')}
           />
-          <div id='editor' className='min-h-[500px]' />
+          <div id='editor' className='h-auto' />
           <p className='text-sm text-gray-500'>
             Use{' '}
             <kbd className='rounded-md border bg-muted px-1 text-xs uppercase'>

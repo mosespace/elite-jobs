@@ -1,9 +1,8 @@
-"use client"
-
-import * as React from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Post } from "@prisma/client"
+'use client'
+import * as React from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { Post } from '@prisma/client'
 
 import {
   AlertDialog,
@@ -14,35 +13,52 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from '@/components/ui/alert-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/Icons"
+} from '@/components/ui/dropdown-menu'
+import { toast } from '@/components/ui/use-toast'
+import { Icons } from '@/components/Icons'
 
 async function deletePost(postId: string) {
-  const response = await fetch(`/api/posts/${postId}`, {
-    method: "DELETE",
-  })
-
-  if (!response?.ok) {
-    toast({
-      title: "Something went wrong.",
-      description: "Your post was not deleted. Please try again.",
-      variant: "destructive",
+  try {
+    const baseurl = process.env.NEXT_PUBLIC_APP_URL as string
+    const response = await fetch(`${baseurl}/api/posts/${postId}`, {
+      method: 'DELETE',
     })
-  }
 
-  return true
+    if (response?.ok) {
+      toast({
+        description: 'Post was deleted Successfully',
+      })
+    }
+
+    if (!response?.ok) {
+      toast({
+        title: 'Something went wrong.',
+        description: 'Your post was not deleted. Please try again.',
+        variant: 'destructive',
+      })
+    }
+
+    return true
+  } catch (error) {
+    console.error('Error deleting post:', error.message)
+    toast({
+      title: 'Something went wrong.',
+      description: 'Your post was not deleted. Please try again.',
+      variant: 'destructive',
+    })
+    return true
+  }
 }
 
 interface PostOperationsProps {
-  post: Pick<Post, "id" | "title">
+  post: Pick<Post, 'id' | 'title'>
 }
 
 export function PostOperations({ post }: PostOperationsProps) {
@@ -53,19 +69,19 @@ export function PostOperations({ post }: PostOperationsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
-          <Icons.ellipsis className="h-4 w-4" />
-          <span className="sr-only">Open</span>
+        <DropdownMenuTrigger className='flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted'>
+          <Icons.ellipsis className='h-4 w-4' />
+          <span className='sr-only'>Open</span>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align='end'>
           <DropdownMenuItem>
-            <Link href={`/editor/${post.id}`} className="flex w-full">
+            <Link href={`/editor/${post.id}`} className='flex w-full'>
               Edit
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="flex cursor-pointer items-center text-destructive focus:text-destructive"
+            className='flex cursor-pointer items-center text-destructive focus:text-destructive'
             onSelect={() => setShowDeleteAlert(true)}
           >
             Delete
@@ -85,11 +101,12 @@ export function PostOperations({ post }: PostOperationsProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={async (event) => {
+              onClick={async event => {
                 event.preventDefault()
                 setIsDeleteLoading(true)
 
                 const deleted = await deletePost(post.id)
+                console.log(post.id)
 
                 if (deleted) {
                   setIsDeleteLoading(false)
@@ -97,12 +114,12 @@ export function PostOperations({ post }: PostOperationsProps) {
                   router.refresh()
                 }
               }}
-              className="bg-red-600 focus:ring-red-600"
+              className='bg-red-600 focus:ring-red-600'
             >
               {isDeleteLoading ? (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
               ) : (
-                <Icons.trash className="mr-2 h-4 w-4" />
+                <Icons.trash className='mr-2 h-4 w-4' />
               )}
               <span>Delete</span>
             </AlertDialogAction>

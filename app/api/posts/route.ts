@@ -3,7 +3,6 @@ import * as z from 'zod'
 
 import { db } from '@/lib/db'
 import authOptions from '@/lib/authOptions'
-import { NextResponse } from 'next/server'
 
 const postCreateSchema = z.object({
   title: z.string(),
@@ -12,13 +11,13 @@ const postCreateSchema = z.object({
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions)
+    const session: any = await getServerSession(authOptions)
 
     if (!session) {
       return new Response('Unauthorized', { status: 403 })
     }
 
-    const { user }: any = session
+    const { user } = session
     const posts = await db.post.findMany({
       select: {
         id: true,
@@ -31,18 +30,20 @@ export async function GET() {
       },
     })
 
-    return NextResponse.json(posts)
+    return new Response(JSON.stringify(posts))
   } catch (error) {
-    return NextResponse.json(null, { status: 500 })
+    return new Response(null, { status: 500 })
   }
 }
 
 export async function POST(req: Request) {
   try {
     const session: any = await getServerSession(authOptions)
+
     if (!session) {
       return new Response('Unauthorized', { status: 403 })
     }
+
     const json = await req.json()
     const body = postCreateSchema.parse(json)
 
@@ -57,8 +58,12 @@ export async function POST(req: Request) {
       },
     })
 
-    return NextResponse.json(post)
+    return new Response(JSON.stringify(post))
   } catch (error) {
-    return NextResponse.json(null, { status: 500 })
+    if (error instanceof z.ZodError) {
+      return new Response(JSON.stringify(error.issues), { status: 422 })
+    }
+
+    return new Response(null, { status: 500 })
   }
 }
