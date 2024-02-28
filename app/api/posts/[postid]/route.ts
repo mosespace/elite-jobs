@@ -50,7 +50,7 @@ export async function PATCH(
     const { params } = routeContextSchema.parse(context)
 
     // Checking if the user has access to this post.
-    if (!(await verifyCurrentUserHasAccessToPost(params.postId))) {
+    if (!(await verifyCurrentUserHasAccessToPost(params.postid))) {
       return new Response(null, { status: 403 })
     }
 
@@ -61,7 +61,7 @@ export async function PATCH(
     // Updating the post.
     await db.post.update({
       where: {
-        id: params.postId,
+        id: params.postid,
       },
       data: {
         title: body.title,
