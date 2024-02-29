@@ -11,7 +11,7 @@ const routeContextSchema = z.object({
   }),
 })
 
-export async function DELETE(request: any, { params: { postid } }: any) {
+export async function DELETE(req: any, { params: { postid } }: any) {
   // console.log(postid)
 
   try {
@@ -41,16 +41,10 @@ export async function DELETE(request: any, { params: { postid } }: any) {
   }
 }
 
-export async function PATCH(
-  req: Request,
-  context: z.infer<typeof routeContextSchema>,
-) {
+export async function PATCH(req: any, { params: { postid } }: any) {
   try {
-    // Validating route params.
-    const { params } = routeContextSchema.parse(context)
-
     // Checking if the user has access to this post.
-    if (!(await verifyCurrentUserHasAccessToPost(params.postid))) {
+    if (!(await verifyCurrentUserHasAccessToPost(postid))) {
       return new Response(null, { status: 403 })
     }
 
@@ -58,10 +52,11 @@ export async function PATCH(
     const json = await req.json()
     const body = postPatchSchema.parse(json)
     console.log(body.title, body.content)
+
     // Updating the post.
     await db.post.update({
       where: {
-        id: params.postid,
+        id: postid,
       },
       data: {
         title: body.title,
@@ -72,10 +67,10 @@ export async function PATCH(
     return new Response(null, { status: 200 })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return NextResponse.json(error.issues, { status: 422 })
     }
 
-    return new Response(null, { status: 500 })
+    return NextResponse.json(null, { status: 500 })
   }
 }
 

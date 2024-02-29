@@ -1,23 +1,23 @@
 'use client'
 
-import * as React from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import '@/styles/editor.css'
+import * as React from 'react'
 import { Post } from '@prisma/client'
 import EditorJS from '@editorjs/editorjs'
+import { useRouter } from 'next/navigation'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import TextareaAutosize from 'react-textarea-autosize'
 import * as z from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import TextareaAutosize from 'react-textarea-autosize'
 
 import '@/styles/editor.css'
 import { cn } from '@/lib/utils'
-import { postPatchSchema } from '@/lib/validations/post'
-import { buttonVariants } from '@/components/ui/button'
-import { toast } from '@/components/ui/use-toast'
 import { Icons } from '@/components/Icons'
+import { toast } from '@/components/ui/use-toast'
+import { buttonVariants } from '@/components/ui/button'
+import { postPatchSchema } from '@/lib/validations/post'
 
 interface EditorProps {
   post: Pick<Post, 'id' | 'title' | 'content' | 'published'>
@@ -92,17 +92,16 @@ export function Editor({ post }: EditorProps) {
       // Save the editor blocks
       const blocks = await ref.current?.save()
 
-      // Prepare the data to be sent in the PATCH request
+      // Preparing the data to be sent in the PATCH request
       const postData = {
         title: data.title,
-        content:
-          "useHooks(🔥).ts is a React hooks library, written in Typescript and easy to use. It provides a set of hooks that enables you to build your React applications faster. The hooks are built upon the principles of DRY (Don't Repeat Yourself). There are hooks for most common use cases you might need.The library is designed to be as minimal as possible. It is fully tree-shakable (using the ESM version), meaning that you only import the hooks you need, and the rest will be removed from your bundle making the cost of using this library negligible. Most hooks are extensively tested and are being used in production environments.",
+        content: blocks,
       }
 
       // Logging the data being sent (optional)
       console.log('Data to be sent:', postData)
 
-      // Send the PATCH request to update the post
+      // Sending the PATCH request to update the post
       const response = await fetch(`/api/posts/${post.id}`, {
         method: 'PATCH',
         headers: {
@@ -128,7 +127,7 @@ export function Editor({ post }: EditorProps) {
       // If an error occurs, handle it
       console.error('Error updating post:', error)
 
-      // Show an error message
+      // Show an error message if everything fails
       toast({
         title: 'Error',
         description: 'Failed to update post. Please try again.',

@@ -7,7 +7,7 @@ import { Post, User } from '@prisma/client'
 import { notFound, redirect } from 'next/navigation'
 
 async function getPostForUser(postId: Post['id'], userId: User['id']) {
-  //   console.log(userId, postId)
+  // console.log(userId, postId)
   return await db.post.findFirst({
     where: {
       id: postId,
@@ -42,7 +42,5 @@ export default async function EditorPage({ params }: EditorPageProps) {
         published: post.published,
       }}
     />
-    
-  
   )
 }
