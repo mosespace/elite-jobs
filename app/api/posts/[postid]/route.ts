@@ -60,6 +60,7 @@ export async function PATCH(req: any, { params: { postid } }: any) {
       },
       data: {
         title: body.title,
+        description: body.description,
         content: body.content,
       },
     })

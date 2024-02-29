@@ -1,5 +1,4 @@
 import { Editor } from '@/components/backend/Editor'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { getCurrentUser } from '@/lib/AuthProvider'
 import authOptions from '@/lib/authOptions'
 import { db } from '@/lib/db'
@@ -38,6 +37,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
       post={{
         id: post.id,
         title: post.title,
+        description: post.description,
         content: post.content,
         published: post.published,
       }}

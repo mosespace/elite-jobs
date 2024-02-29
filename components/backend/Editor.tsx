@@ -20,7 +20,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { postPatchSchema } from '@/lib/validations/post'
 
 interface EditorProps {
-  post: Pick<Post, 'id' | 'title' | 'content' | 'published'>
+  post: Pick<Post, 'id' | 'title' | 'description' | 'content' | 'published'>
 }
 
 type FormData = z.infer<typeof postPatchSchema>
@@ -44,7 +44,10 @@ export function Editor({ post }: EditorProps) {
     const LinkTool = (await import('@editorjs/link')).default
     const InlineCode = (await import('@editorjs/inline-code')).default
 
-    const body = postPatchSchema.parse(post)
+    const body = postPatchSchema.parse({
+      ...post,
+      description: post.description as null, // Provide a default value if description is null
+    })
 
     if (!ref.current) {
       const editor = new EditorJS({
@@ -86,6 +89,7 @@ export function Editor({ post }: EditorProps) {
   }, [isMounted, initializeEditor])
 
   async function onSubmit(data: FormData) {
+    // console.log(data)
     try {
       setIsSaving(true)
 
@@ -95,11 +99,12 @@ export function Editor({ post }: EditorProps) {
       // Preparing the data to be sent in the PATCH request
       const postData = {
         title: data.title,
+        description: data.description,
         content: blocks,
       }
 
       // Logging the data being sent (optional)
-      console.log('Data to be sent:', postData)
+      // console.log('Data to be sent:', postData)
 
       // Sending the PATCH request to update the post
       const response = await fetch(`/api/posts/${post.id}`, {
@@ -174,6 +179,16 @@ export function Editor({ post }: EditorProps) {
             className='w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none'
             {...register('title')}
           />
+
+          <TextareaAutosize
+            autoFocus
+            id='description'
+            defaultValue={post.description as any}
+            placeholder='Enter Short Description'
+            className='mt-8 w-full resize-none appearance-none overflow-hidden bg-transparent text-xl font-semibold focus:outline-none'
+            {...register('description')}
+          />
+
           <div id='editor' className='h-auto' />
           <p className='text-sm text-gray-500'>
             Use{' '}

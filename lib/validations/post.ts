@@ -1,8 +1,9 @@
-import * as z from "zod"
+import * as z from 'zod'
 
 export const postPatchSchema = z.object({
   title: z.string().min(3).max(128).optional(),
 
-  // TODO: Type this properly from editorjs block types?
+  description: z.string().min(3).max(150).optional(),
+
   content: z.any().optional(),
 })
