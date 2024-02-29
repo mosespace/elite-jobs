@@ -136,7 +136,7 @@ function JobListing() {
               Clear All
             </button>
           </div>
-          <div className='flex flex-col space-y-2'>
+          <div className='flex flex-col space-y-2 text-white dark:text-black'>
             <label className='inline-flex items-center'>
               <input
                 type='checkbox'
@@ -178,7 +178,7 @@ function JobListing() {
           <h6 className='mb-3 text-base font-medium text-gray-900'>
             Job Roles
           </h6>
-          <div className='flex flex-col space-y-2'>
+          <div className='flex flex-col space-y-2 text-white dark:text-black'>
             <label className='inline-flex items-center'>
               <input
                 type='radio'
@@ -227,7 +227,7 @@ function JobListing() {
           <h6 className='mb-3 text-base font-medium text-gray-900'>
             Remote Only
           </h6>
-          <div className='space-y-2'>
+          <div className='space-y-2 text-white dark:text-black'>
             <label className='inline-flex cursor-pointer items-center'>
               <input type='checkbox' value='' className='peer sr-only' />
               <div className="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"></div>
@@ -244,7 +244,7 @@ function JobListing() {
           <h6 className='mb-3 text-base font-medium text-gray-900'>
             Salary Range
           </h6>
-          <div className='flex flex-col space-y-2'>
+          <div className='flex flex-col space-y-2 text-white dark:text-black'>
             <label className='inline-flex items-center'>
               <input
                 type='radio'
