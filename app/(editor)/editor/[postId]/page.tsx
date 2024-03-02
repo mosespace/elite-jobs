@@ -38,6 +38,10 @@ export default async function EditorPage({ params }: EditorPageProps) {
         id: post.id,
         title: post.title,
         description: post.description,
+        jobType: post.jobType,
+        jobRole: post.jobRoles,
+        salaryRange: post.salaryRange,
+        location: post.location,
         content: post.content,
         published: post.published,
       }}

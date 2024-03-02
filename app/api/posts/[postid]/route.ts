@@ -5,12 +5,6 @@ import authOptions from '@/lib/authOptions'
 import { getServerSession } from 'next-auth'
 import { postPatchSchema } from '@/lib/validations/post'
 
-const routeContextSchema = z.object({
-  params: z.object({
-    postid: z.string(),
-  }),
-})
-
 export async function DELETE(req: any, { params: { postid } }: any) {
   // console.log(postid)
 
@@ -51,7 +45,7 @@ export async function PATCH(req: any, { params: { postid } }: any) {
     // Getting and validating the request body.
     const json = await req.json()
     const body = postPatchSchema.parse(json)
-    console.log(body.title, body.content)
+    // console.log(body.title, body.content)
 
     // Updating the post.
     await db.post.update({
@@ -60,6 +54,10 @@ export async function PATCH(req: any, { params: { postid } }: any) {
       },
       data: {
         title: body.title,
+        jobRole: body.jobRole,
+        jobType: body.jobType,
+        location: body.location,
+        salaryRange: body.salaryRange,
         description: body.description,
         content: body.content,
       },
