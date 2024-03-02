@@ -25,7 +25,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Form, FormControl, FormField, FormItem } from '../ui/form'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form'
+import { Input } from '../ui/input'
+
 interface EditorProps {
   post: Pick<
     Post,
@@ -38,6 +48,11 @@ interface EditorProps {
     | 'jobRole'
     | 'salaryRange'
     | 'location'
+    | 'company_name'
+    | 'company_location'
+    | 'company_salary_range'
+    | 'company_website'
+    | 'application_link'
   >
 }
 
@@ -67,10 +82,15 @@ export function Editor({ post }: EditorProps) {
 
     const body = postPatchSchema.parse({
       ...post,
-      description: post.description ?? 'Default Description', // Provide a default value if description is null or too short
-      jobType: post.jobType ?? '', // Provide a default value if jobType is null
-      salaryRange: post.salaryRange ?? '', // Provide a default value if salaryRange is null
-      location: post.location ?? '', // Provide a default value if location is null
+      description: post.description ?? 'Default Description',
+      jobType: post.jobType ?? '',
+      salaryRange: post.salaryRange ?? '',
+      location: post.location ?? '',
+      company_name: post.company_name ?? '',
+      company_location: post.company_location ?? '',
+      company_salary_range: post.company_salary_range ?? '',
+      company_website: post.company_website ?? '',
+      application_link: post.application_link ?? '',
     })
 
     if (!ref.current) {
@@ -121,12 +141,16 @@ export function Editor({ post }: EditorProps) {
       const blocks = await ref.current?.save()
 
       const { title, description } = data
-      const jobType = data.jobType || '' // Provide default value if null
-      const jobRole = data.jobRole || '' // Provide default value if null
-      const salaryRange = data.salaryRange || '' // Provide default value if null
-      const location = data.location || '' // Provide default value if null
+      const jobType = data.jobType || ''
+      const jobRole = data.jobRole || ''
+      const salaryRange = data.salaryRange || ''
+      const location = data.location || ''
+      const company_name = data.company_name || ''
+      const company_location = data.company_location || ''
+      const company_salary_range = data.company_salary_range || ''
+      const company_website = data.company_website || ''
+      const application_link = data.application_link || ''
 
-      // Preparing the data to be sent in the PATCH request
       const postData = {
         title,
         description,
@@ -135,9 +159,14 @@ export function Editor({ post }: EditorProps) {
         jobRole,
         salaryRange,
         location,
+        company_name,
+        company_website,
+        company_location,
+        application_link,
+        company_salary_range,
       }
 
-      console.log('Data to be sent:', postData)
+      // console.log('Data to be sent:', postData)
 
       // Sending the PATCH request to update the post
       const response = await fetch(`/api/posts/${post.id}`, {
@@ -338,6 +367,112 @@ export function Editor({ post }: EditorProps) {
                         <SelectItem value='Gulu'>Gulu</SelectItem>
                       </SelectContent>
                     </Select>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className='my-8 grid gap-8 md:grid-cols-4 lg:flex-row'>
+              <FormField
+                control={control}
+                name='company_name'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder='Company Name'
+                        {...field}
+                        defaultValue={post.company_name ?? ''}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      This company name will be publicly displayed
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name='company_location'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Location</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder='Company Location'
+                        {...field}
+                        defaultValue={post.company_location ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name='company_salary_range'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Salary Range</FormLabel>
+
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={post.company_salary_range ?? ''}
+                    >
+                      <FormControl>
+                        <SelectTrigger className='w-[180px]'>
+                          <SelectValue placeholder='Company Salary Range' />
+                        </SelectTrigger>
+                      </FormControl>
+
+                      <SelectContent>
+                        <SelectItem value='$20K - $50K'>$20K - $50K</SelectItem>
+                        <SelectItem value='$50K - $100K'>
+                          $50K - $100K
+                        </SelectItem>
+                        <SelectItem value='&gt; $100K'>&gt; $100K</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name='company_website'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Website</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder='Company Website'
+                        {...field}
+                        defaultValue={post.company_website ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name='application_link'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Application Link</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder='Application Link'
+                        {...field}
+                        defaultValue={post.application_link ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

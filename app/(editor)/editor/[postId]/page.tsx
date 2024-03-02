@@ -43,6 +43,11 @@ export default async function EditorPage({ params }: EditorPageProps) {
         salaryRange: post.salaryRange,
         location: post.location,
         content: post.content,
+        company_name: post.company_name,
+        company_location: post.company_location,
+        company_website: post.company_website,
+        application_link: post.application_link,
+        company_salary_range: post.company_salary_range,
         published: post.published,
       }}
     />

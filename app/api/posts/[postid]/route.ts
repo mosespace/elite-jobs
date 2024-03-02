@@ -60,6 +60,11 @@ export async function PATCH(req: any, { params: { postid } }: any) {
         salaryRange: body.salaryRange,
         description: body.description,
         content: body.content,
+        company_name: body.company_name,
+        company_website: body.company_website,
+        company_location: body.company_location,
+        application_link: body.application_link,
+        company_salary_range: body.company_salary_range,
       },
     })
 

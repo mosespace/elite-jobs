@@ -70,9 +70,14 @@ model Post {
   slug        String?
   description String?
   jobType     String?
-  jobRole    String?
+  jobRole     String?
   salaryRange String?
   location    String?
+  company_name         String?
+  company_location     String?
+  company_salary_range String?
+  company_website      String?
+  application_link     String?
   content     Json?
   published   Boolean  @default(false)
   createdAt   DateTime @default(now()) @map(name: "created_at")
