@@ -9,7 +9,7 @@ import ThemeProvider from '@/components/backend/layout/ThemeToggle/ThemeProvider
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Elite Jobs |Jobs around the globe',
+  title: 'Elite Jobs | Jobs around the globe',
   description: 'Created by love from Kisakye Moses',
 }
 

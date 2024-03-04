@@ -15,15 +15,13 @@ export const postPatchSchema = z.object({
 
   company_name: z.string().optional(),
 
-  company_website: z.string().optional(),
+  company_website: z.string().trim().url().optional(),
 
   company_salary_range: z.string().optional(),
 
   company_location: z.string().optional(),
 
-  application_link: z.string().optional(),
-
-  application_website: z.string().optional(),
+  application_link: z.string().trim().url().optional(),
 
   content: z.any().optional(),
 })
