@@ -80,6 +80,7 @@ model Post {
   application_link     String?
   content     Json?
   published   Boolean  @default(false)
+  isFeatured  Boolean  @default(false)
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @default(now()) @map(name: "updated_at")
   authorId    String

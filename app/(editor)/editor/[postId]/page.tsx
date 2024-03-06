@@ -49,6 +49,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
         application_link: post.application_link,
         company_salary_range: post.company_salary_range,
         published: post.published,
+        isFeatured: post.isFeatured,
       }}
     />
   )

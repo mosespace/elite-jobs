@@ -1,12 +1,12 @@
 import { toast } from '@/components/ui/use-toast'
 
 export async function makePostRequest(
-  setLoading,
-  endpoint,
-  data,
-  resourceName,
-  reset,
-  redirect,
+  setLoading: (value: boolean) => void,
+  endpoint: string,
+  data: any,
+  resourceName: string,
+  reset: any,
+  redirect: any,
   method = 'POST', // Default method is POST
 ) {
   try {

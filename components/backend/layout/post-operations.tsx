@@ -46,7 +46,7 @@ async function deletePost(postId: string) {
     }
 
     return true
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error deleting post:', error.message)
     toast({
       title: 'Something went wrong.',

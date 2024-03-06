@@ -35,6 +35,7 @@ import {
   FormMessage,
 } from '../ui/form'
 import { Input } from '../ui/input'
+import { Switch } from '../ui/switch'
 
 interface EditorProps {
   post: Pick<
@@ -53,6 +54,7 @@ interface EditorProps {
     | 'company_salary_range'
     | 'company_website'
     | 'application_link'
+    | 'isFeatured'
   >
 }
 
@@ -140,16 +142,20 @@ export function Editor({ post }: EditorProps) {
       // Save the editor blocks
       const blocks = await ref.current?.save()
 
-      const { title, description } = data
-      const jobType = data.jobType || ''
-      const jobRole = data.jobRole || ''
-      const salaryRange = data.salaryRange || ''
-      const location = data.location || ''
-      const company_name = data.company_name || ''
-      const company_location = data.company_location || ''
-      const company_salary_range = data.company_salary_range || ''
-      const company_website = data.company_website || ''
-      const application_link = data.application_link || ''
+      const {
+        title,
+        description,
+        jobType,
+        jobRole,
+        salaryRange,
+        location,
+        company_name,
+        company_location,
+        company_salary_range,
+        company_website,
+        application_link,
+        isFeatured,
+      } = data
 
       const postData = {
         title,
@@ -164,9 +170,10 @@ export function Editor({ post }: EditorProps) {
         company_location,
         application_link,
         company_salary_range,
+        isFeatured,
       }
 
-      // console.log('Data to be sent:', postData)
+      console.log('Data to be sent:', postData)
 
       // Sending the PATCH request to update the post
       const response = await fetch(`/api/posts/${post.id}`, {
@@ -479,12 +486,35 @@ export function Editor({ post }: EditorProps) {
             </div>
 
             <div id='editor' className='h-auto' />
+            <div className='space-y-4 py-8'>
+              <FormField
+                control={control}
+                name='isFeatured'
+                render={({ field }) => (
+                  <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm'>
+                    <div className='space-y-0.5'>
+                      <FormLabel>Featured Job</FormLabel>
+                      <FormDescription>
+                        If you make this job featured, it will have a different
+                        color on the main website
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
             <p className='text-sm text-gray-500'>
-              Use{' '}
+              This site was developed by{' '}
               <kbd className='rounded-md border bg-muted px-1 text-xs uppercase'>
-                Tab
+                uncle moses
               </kbd>{' '}
-              to open the command menu.
+              call +256770981193 fro assistance.
             </p>
           </div>
         </div>

@@ -3,7 +3,7 @@ import * as z from 'zod'
 export const postPatchSchema = z.object({
   title: z.string().min(3).max(128).optional(),
 
-  description: z.string().min(3).max(150).optional(),
+  description: z.string().min(3).max(500).optional(),
 
   jobType: z.string().optional(),
 
@@ -22,6 +22,8 @@ export const postPatchSchema = z.object({
   company_location: z.string().optional(),
 
   application_link: z.string().trim().url().optional(),
+
+  isFeatured: z.boolean().optional(),
 
   content: z.any().optional(),
 })

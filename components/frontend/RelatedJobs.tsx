@@ -1,26 +1,21 @@
-import { Job } from '@/types/Job'
 import { ExternalLink, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
-interface RelatedJobsProps {
-  data: Job[]
-}
-
-function RelatedJobs({ data }: RelatedJobsProps) {
+function RelatedJobs({ data }: any) {
   return (
     <>
       {/* related jobs */}
       <div className='ml-0 flex flex-col'>
         <h3 className='mt-8 pb-4 text-xl font-extrabold'>Related Jobs</h3>
         <div className='flex flex-1 flex-col gap-4'>
-          {data.slice(0, 2).map(job => (
+          {data.slice(0, 2).map((job: any) => (
             <div
               key={job.id}
               className={
                 job.isFeatured
                   ? 'rounded-lg bg-indigo-600 text-gray-50 shadow-lg'
-                  : 'rounded-lg text-zinc-950 shadow-lg'
+                  : 'rounded-lg bg-white text-zinc-950 shadow-lg'
               }
             >
               <div className='px-6 py-5'>

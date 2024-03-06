@@ -16,7 +16,7 @@ const jobs = [
     title: 'Software Engineer',
     slug: 'softwares-engineer',
     company: 'kikuubo-online',
-    description:
+    content:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     datePosted: '22 days ago',
     isFeatured: true,
@@ -28,41 +28,18 @@ const jobs = [
     title: 'UX Designer',
     slug: 'ux-designer',
     company: 'safeBoda',
-    description:
+    content:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     datePosted: '1 month ago',
     isFeatured: false,
     location: 'United Kingdom',
     salaryRange: '$50K-$100K',
   },
-  {
-    id: 3,
-    title: 'UX Designer',
-    slug: 'ux-designer',
-    company: 'nrg-radio',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    datePosted: '1 month ago',
-    isFeatured: false,
-    location: 'Rwanda',
-    salaryRange: '$100K',
-  },
-  {
-    id: 4,
-    title: 'UX Designer',
-    slug: 'ux-designer',
-    company: 'nbs',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    datePosted: '1 month ago',
-    isFeatured: true,
-    location: 'Gulu',
-    salaryRange: '$20K-$10K',
-  },
   // Add more job objects as needed
 ]
 
-function DetailedJob() {
+function DetailedJob({ data }: any) {
+  // console.log(data)
   return (
     <div className='relative mx-auto w-full max-w-7xl items-center px-5 py-12 md:px-12 lg:px-16'>
       <Link
@@ -77,14 +54,14 @@ function DetailedJob() {
         {/* Job Description*/}
         <div className='flex flex-1 flex-col gap-4'>
           <h2 className='max-w-lg text-[2rem] font-extrabold leading-10'>
-            Engineering Manager Developer Experience
+            {data?.title}
           </h2>
 
           {/* description */}
           <div className='flex flex-col'>
             <h3 className='mt-8 pb-4 text-xl font-extrabold'>The Role</h3>
             <p>
-              In the world of AI, behavioural predictions are leading the charge
+              In the world of AI, behavioral predictions are leading the charge
               to better machine learning. <br></br>
               <br></br>
               There is so much happening in the AI space. Advances in the
