@@ -1,5 +1,5 @@
 'use client'
-import { ChevronDown, ExternalLink, MapPin } from 'lucide-react'
+import { ExternalLink, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
@@ -63,7 +63,7 @@ function JobListing({ allJobs }: any) {
       <h2 className='text-3xl font-bold text-black'>Latest jobs</h2>
 
       <div className='mt-8 flex flex-col gap-8 md:flex-row'>
-        {/* All Jobs*/};
+        {/* All Jobs*/}
         <div className='flex flex-1 flex-col gap-4'>
           {jobs?.map((job: any) => (
             <div

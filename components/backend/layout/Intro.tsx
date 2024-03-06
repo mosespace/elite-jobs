@@ -1,7 +1,6 @@
 import { JobCreateButton } from '../job-creation-btn'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Overview } from '@/components/backend/Overview'
-import { RecentSales } from '@/components/backend/RecentSales'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Card,
@@ -11,7 +10,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { EmptyPlaceholder } from '@/components/skeleton/empty-placeholder'
-import getData from '@/lib/getData'
 import { PostItem } from './post-item'
 import { db } from '@/lib/db'
 
@@ -188,7 +186,7 @@ export default async function Intro({ user }: any) {
                   <Overview />
                 </CardContent>
               </Card>
-              <Card className='col-span-4 md:col-span-3'>
+              {/* <Card className='col-span-4 md:col-span-3'>
                 <CardHeader>
                   <CardTitle>Recent Sales</CardTitle>
                   <CardDescription>
@@ -198,7 +196,7 @@ export default async function Intro({ user }: any) {
                 <CardContent>
                   <RecentSales />
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           </TabsContent>
         </Tabs>

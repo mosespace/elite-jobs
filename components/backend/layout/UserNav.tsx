@@ -4,11 +4,8 @@ import { User } from 'next-auth'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { signOut } from 'next-auth/react'
@@ -41,7 +38,7 @@ export function UserNav({ user }: UserAccountNavProps) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href='/dashboard/billing'>Billing</Link>
+          <Link href='/dashboard'>Dashboard</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href='/dashboard/settings'>Settings</Link>

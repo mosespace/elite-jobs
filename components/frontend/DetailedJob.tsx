@@ -38,8 +38,26 @@ const jobs = [
   // Add more job objects as needed
 ]
 
+// Import the package
+const edjsHTML = require('editorjs-html')
+
+// Initialize the parser
+const edjsParser = edjsHTML()
+
 function DetailedJob({ data }: any) {
-  // console.log(data)
+  const cleanData = data.content
+  const html = edjsParser.parse(cleanData)
+  // console.log(html)
+
+  const formatDate = (dateString: any) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
+
   return (
     <div className='relative mx-auto w-full max-w-7xl items-center px-5 py-12 md:px-12 lg:px-16'>
       <Link
@@ -59,59 +77,21 @@ function DetailedJob({ data }: any) {
 
           {/* description */}
           <div className='flex flex-col'>
-            <h3 className='mt-8 pb-4 text-xl font-extrabold'>The Role</h3>
-            <p>
-              In the world of AI, behavioral predictions are leading the charge
-              to better machine learning. <br></br>
-              <br></br>
-              There is so much happening in the AI space. Advances in the
-              economic sectors have seen automated business practices rapidly
-              increasing economic value. While the realm of the human sciences
-              has used the power afforded by computational capabilities to solve
-              many human based dilemmas. Even the art scene has adopted
-              carefully selected ML applications to usher in the technological
-              movement. <br></br>
-              <br></br>
-              As a Senior Client Engineer, you'll work alongside other
-              engineers, designers, and product managers to tackle everything
-              from huge company initiatives to modest but important bug fixes,
-              from start to finish. You'll also collaborate with your product
-              team on discovery, helping to assess the direction and feasibility
-              of product changes. And, perhaps most importantly, you'll actively
-              contribute to the evolution of the culture and processes of a
-              growing engineering team.
-            </p>
+            <h3 className='mt-8 pb-4 text-xl font-extrabold'>
+              The Description:
+            </h3>
+            {data.description}
           </div>
 
           {/* about */}
           <div className='flex flex-col'>
-            <h3 className='mt-8 pb-4 text-xl font-extrabold'>About You</h3>
-            <p>
-              You love building great software. Your work could be supporting
-              new feature development, migrating existing features, and creating
-              other mobile and web solutions for customers. You'll have a
-              primary focus on frontend development using Javascript. Our
-              client's tech stack is JavaScript, primarily using React. A strong
-              understanding of JS core (ES2019+) is required, with some exposure
-              in Java as back-end technology. We use modern tools, which means
-              you'll have the opportunity to work with Webpack, Redux, Apollo,
-              Styled Components, and much more. <br></br>
-              <br></br>
-              You love learning. Engineering is an ever-evolving world. You
-              enjoy playing with new tech and exploring areas that you might not
-              have experience with yet. You are self-driven, self-learner
-              willing to share knowledge and participate actively in your
-              community. <br></br>
-              <br></br>
-              Having overlap with your team is critical when working in a global
-              remote team. Modus requires all team members to overlap with EST
-              morning hours daily. In addition, reliable high speed internet is
-              a must.
-            </p>
+            <h3 className='mt-8 pb-4 text-xl font-extrabold'>Job Details</h3>
+            <div id='editor' className='h-auto' />
+            <div className='mt-8' dangerouslySetInnerHTML={{ __html: html }} />
           </div>
 
           {/* things you might do */}
-          <div className='flex flex-col'>
+          {/* <div className='flex flex-col'>
             <h3 className='mt-8 pb-4 text-xl font-extrabold'>
               Things You Might Do
             </h3>
@@ -142,7 +122,7 @@ function DetailedJob({ data }: any) {
                 </li>
               </ul>{' '}
             </span>
-          </div>
+          </div> */}
 
           {/* related jobs */}
           <RelatedJobs data={jobs} />
@@ -222,29 +202,33 @@ function DetailedJob({ data }: any) {
                     alt='company-name'
                   />
                   <h2 className='mt-4 text-xl font-bold text-zinc-950'>
-                    Medium Inc.
+                    Developed By Moses
                   </h2>
                 </div>
 
                 <div className='p-4'>
+                  <div className='flex flex-col gap-2'></div>
                   <h3 className='inline-flex items-center gap-2 text-sm  text-zinc-950  '>
                     <CalendarCheck2 className='h-4 w-4' />
-                    24 August, 2024
+                    {formatDate(data.createdAt)} &nbsp;
                   </h3>
                   <p className='mt-1 inline-flex items-center gap-2 text-sm text-zinc-950'>
                     <MapPin className='h-4 w-4' />
-                    London, UK / Remote friendly
+                    {data.company_location}
                   </p>
                   <p className='mt-1 inline-flex items-center gap-2 text-sm text-zinc-950'>
                     <CreditCard className='h-4 w-4' />
-                    $75K - $100K
+                    {data.company_salary_range}
                   </p>
                   <div className='mt-4 flex w-full flex-col justify-center'>
-                    <button className='group inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-500/85 px-4 py-2 text-sm text-white hover:bg-blue-500/95 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-50 active:bg-fuchsia-50 active:text-[#279f0e]'>
-                      Apply Now <ArrowRight />
-                    </button>
                     <Link
-                      href='/job-link'
+                      href={data.application_link}
+                      className='group inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-500/85 px-4 py-2 text-sm text-white hover:bg-blue-500/95 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-50 active:bg-fuchsia-50 active:text-[#279f0e]'
+                    >
+                      Apply Now <ArrowRight />
+                    </Link>
+                    <Link
+                      href={data.company_website}
                       className='mt-4 text-center text-sm text-blue-600'
                     >
                       Visit Website

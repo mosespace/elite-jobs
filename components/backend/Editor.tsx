@@ -196,15 +196,15 @@ export function Editor({ post }: EditorProps) {
       router.refresh()
 
       // Show a success message
-      toast({ description: 'Your post has been updated.' })
+      toast({ description: 'Your job has been saved.' })
     } catch (error) {
       // If an error occurs, handle it
-      console.error('Error updating post:', error)
+      console.error('Error save job:', error)
 
       // Show an error message if everything fails
       toast({
         title: 'Error',
-        description: 'Failed to update post. Please try again.',
+        description: 'Failed to save job. Please try again.',
         variant: 'destructive',
       })
     }
